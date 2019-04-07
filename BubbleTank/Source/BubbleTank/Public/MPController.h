@@ -19,5 +19,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	
+	void AimTo();
+	bool RayPosition(FVector& OutHitLocation) const;
+	bool GetDirection(FVector2D ReticlePosition, FVector& WorldDirection) const;
+	bool VectorPosition(FVector SightDirection, FVector& OutHitPosition) const;
+
+	UPROPERTY(EditAnywhere)
+	float ReticleX = 0.5;
+	UPROPERTY(EditAnywhere)
+	float ReticleY = 0.3333;
+	UPROPERTY(EditAnywhere)
+	float Range = 1000000;
 };
