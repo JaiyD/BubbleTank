@@ -13,5 +13,11 @@ UCLASS()
 class BUBBLETANK_API AMPController : public APlayerController
 {
 	GENERATED_BODY()
+
+public:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+private:
 	
 };

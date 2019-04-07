@@ -2,6 +2,11 @@
 
 
 #include "AimCmpt.h"
+#include "Engine/World.h"
+#include "Components/StaticMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
+#include "Barrel.h"
+#include "Turret.h"
 
 // Sets default values for this component's properties
 UAimCmpt::UAimCmpt()
@@ -32,3 +37,33 @@ void UAimCmpt::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	// ...
 }
 
+void UAimCmpt::init(UBarrel* SetBarrel, UTurret* SetTurret)
+{
+	Barrel = SetBarrel;
+	Turret = SetTurret;
+}
+
+void UAimCmpt::AimDirection(FVector OutHitPosition)
+{
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(Turret)) { return; }
+
+	FVector OutTossVelocity(0);
+	FVector Start = Barrel->GetSocketLocation(FName("Projectile"));
+
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutTossVelocity, Start, OutHitPosition, TossSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace))
+	{
+		AimOrientation = OutTossVelocity.GetSafeNormal();
+		AimMovement(AimOrientation);
+	}
+}
+
+void UAimCmpt::AimMovement(FVector AimOrientation)
+{
+	if (!ensure(Barrel && Turret)) { return; }
+
+	auto BarrelRot = Barrel->GetForwardVector().Rotation();
+	auto Rotator = AimOrientation.Rotation() - BarrelRot;
+	Barrel->Elevate(Rotator.Pitch);
+	Turret->Rotate(Rotator.Yaw);
+}

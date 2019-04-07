@@ -13,5 +13,12 @@ UCLASS()
 class BUBBLETANK_API AAIControl : public AAIController
 {
 	GENERATED_BODY()
+
+public:
+	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
+
+private:
+	float radius = 3000;
 	
 };
