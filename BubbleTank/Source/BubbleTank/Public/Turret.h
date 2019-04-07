@@ -9,9 +9,15 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(meta = (BlueprintSpawnableComponent))
 class BUBBLETANK_API UTurret : public UStaticMeshComponent
 {
 	GENERATED_BODY()
 	
+public:
+	void Rotate(float RotationSpeed);
+
+private:
+	UPROPERTY(EditAnywhere, Category = Setup)
+	float MaxRotationDegrees = 25; // rotation per second
 };

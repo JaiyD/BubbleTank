@@ -9,9 +9,19 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(meta = (BlueprintSpawnableComponent))
 class BUBBLETANK_API UBarrel : public UStaticMeshComponent
 {
 	GENERATED_BODY()
-	
+
+public:
+	void Elevate(float ElevationSpeed);
+
+private:
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float MaxElevationDegrees = 10;// elevation degrees per second
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float MaxElevation = 40;
+	UPROPERTY(EditAnywhere, Category = Setup)
+		float MinElevation = 0;
 };
