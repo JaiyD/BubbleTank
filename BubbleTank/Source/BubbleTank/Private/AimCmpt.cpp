@@ -7,6 +7,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Barrel.h"
 #include "Turret.h"
+#include "Projectile.h"
 
 // Sets default values for this component's properties
 UAimCmpt::UAimCmpt()
@@ -23,7 +24,7 @@ UAimCmpt::UAimCmpt()
 void UAimCmpt::BeginPlay()
 {
 	Super::BeginPlay();
-
+	LastFire = GetWorld()->GetTimeSeconds();
 	// ...
 	
 }
@@ -66,4 +67,17 @@ void UAimCmpt::AimMovement(FVector AimOrientation)
 	auto Rotator = AimOrientation.Rotation() - BarrelRot;
 	Barrel->Elevate(Rotator.Pitch);
 	Turret->Rotate(Rotator.Yaw);
+}
+
+void UAimCmpt::Fire()
+{
+	if (!ensure(Barrel)) { return; }
+	if (!ensure(ProjectileBP)) { return; }
+
+	if (((GetWorld()->GetTimeSeconds() - LastFire) > Reload))
+	{
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+		Projectile->Launch(TossSpeed);
+		LastFire = GetWorld()->GetTimeSeconds();
+	}
 }

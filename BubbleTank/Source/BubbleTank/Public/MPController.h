@@ -6,6 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "MPController.generated.h"
 
+class UAimCmpt;
+
 /**
  * 
  */
@@ -17,6 +19,10 @@ class BUBBLETANK_API AMPController : public APlayerController
 public:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
+
+protected:
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
+	void FoundAimCmpt(UAimCmpt* AimCmptRef);
 
 private:
 	void AimTo();

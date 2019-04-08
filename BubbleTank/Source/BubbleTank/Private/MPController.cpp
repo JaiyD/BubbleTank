@@ -8,7 +8,10 @@
 void AMPController::BeginPlay()
 {
 	Super::BeginPlay();
+	auto AimC = GetPawn()->FindComponentByClass<UAimCmpt>();
+	if (!ensure(AimC)) { return; }
 
+	FoundAimCmpt(AimC);
 }
 
 void AMPController::Tick(float DeltaTime)
@@ -27,7 +30,6 @@ void AMPController::AimTo()
 	if (RayPosition(OutHitPosition))
 	{
 		AimC->AimDirection(OutHitPosition);
-		UE_LOG(LogTemp, Warning, TEXT("aiming at %s"), *(OutHitPosition.ToString()))
 	}
 }
 

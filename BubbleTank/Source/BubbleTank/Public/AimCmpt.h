@@ -8,6 +8,7 @@
 
 class UBarrel;
 class UTurret;
+class AProjectile;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUBBLETANK_API UAimCmpt : public UActorComponent
@@ -31,6 +32,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void init(UBarrel* SetBarrel, UTurret* SetTurret);
 
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
 private:
 	void AimMovement(FVector AimOrientation);
 
@@ -39,7 +43,12 @@ private:
 
 	FVector AimOrientation;
 
+	float LastFire = 0;
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	float Reload = 3;
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float TossSpeed = 8000.0;
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBP;
 		
 };
