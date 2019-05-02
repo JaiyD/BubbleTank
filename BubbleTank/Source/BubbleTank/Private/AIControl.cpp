@@ -25,6 +25,6 @@ void AAIControl::Tick(float DeltaTime)
 
 	auto AimC = Possessed->FindComponentByClass<UAimCmpt>();
 	AimC->AimDirection(Player->GetActorLocation());
-	// fire
+	AimC->Fire();
 
 }
