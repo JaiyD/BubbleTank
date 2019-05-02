@@ -25,7 +25,7 @@ public:
 	void SetSpeed(float Throttle);
 
 	UPROPERTY(EditDefaultsOnly)
-	float DrivingForce = 140000000.0;//newtons
+	float DrivingForce = 100000000.0;//newtons
 
 private:
 	UFUNCTION()
