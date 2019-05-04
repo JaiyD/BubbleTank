@@ -10,6 +10,17 @@ void UMoveCmpt::Init(UTrack* LeftTrackSet, UTrack* RightTrackSet)
 	RightTrack = RightTrackSet;
 }
 
+void UMoveCmpt::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	auto TankFwrd = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIFwrd = MoveVelocity.GetSafeNormal();
+	auto Fwrd = FVector::DotProduct(TankFwrd, AIFwrd);
+	auto Rotation = FVector::CrossProduct(TankFwrd, AIFwrd);
+
+	Moving(Fwrd);
+	Turning(Rotation.Z);
+}
+
 void UMoveCmpt::Moving(float Speed)
 {
 	if (!ensure(LeftTrack && RightTrack)) { return; }

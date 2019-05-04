@@ -19,6 +19,6 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	float radius = 3000;
+	float radius = 3000;//radius for the ai tank around the player tank
 	
 };

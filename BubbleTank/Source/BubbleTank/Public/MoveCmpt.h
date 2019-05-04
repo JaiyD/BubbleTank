@@ -24,6 +24,9 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Init(UTrack* LeftTrackSet, UTrack* RightTrackSet);
 
+	//pathfinding for ai
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
+
 private:
 	UTrack* LeftTrack = nullptr;
 	UTrack* RightTrack = nullptr;

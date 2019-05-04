@@ -22,6 +22,7 @@ void AAIControl::Tick(float DeltaTime)
 	if (!ensure(Player && Possessed)) { return; }
 
 	//move
+	MoveToActor(Player, radius);
 
 	auto AimC = Possessed->FindComponentByClass<UAimCmpt>();
 	AimC->AimDirection(Player->GetActorLocation());
