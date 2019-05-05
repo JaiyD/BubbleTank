@@ -22,10 +22,22 @@ void UTrack::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponent
 
 void UTrack::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	
 	Drive();
-	//sidewaysforce
+	Slipping();
 	CurrentSpeed = 0;
+}
+
+//force to counteract the slipping of the tanks
+void UTrack::Slipping()
+{
+
+	auto Slip = FVector::DotProduct(GetRightVector(), GetComponentVelocity());
+	auto Time = GetWorld()->GetDeltaSeconds();
+	auto Acceleration = -Slip / Time * GetRightVector();//opposite of what is needed
+
+	auto Root = Cast<UStaticMeshComponent>(GetOwner()->GetRootComponent());
+	auto Force = (Root->GetMass() * Acceleration) / 2;//two tracks with F=ma
+	Root->AddForce(Force);
 }
 
 

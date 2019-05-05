@@ -25,11 +25,13 @@ public:
 	void SetSpeed(float Throttle);
 
 	UPROPERTY(EditDefaultsOnly)
-	float DrivingForce = 100000000.0;//newtons
+	float DrivingForce = 80000000.0;//newtons
 
 private:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	void Slipping();
 
 	void Drive();
 
