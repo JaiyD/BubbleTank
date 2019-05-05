@@ -35,7 +35,14 @@ void UAimCmpt::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	// ...
+	if (bool isReloaded = ((GetWorld()->GetTimeSeconds() - LastFire) < Reload))
+	{
+		FiringState = EFireState::Reloading;
+	}
+	else
+	{
+		FiringState = EFireState::Loaded;
+	}
 }
 
 void UAimCmpt::init(UBarrel* SetBarrel, UTurret* SetTurret)
@@ -71,11 +78,11 @@ void UAimCmpt::AimMovement(FVector AimOrientation)
 
 void UAimCmpt::Fire()
 {
-	if (!ensure(Barrel)) { return; }
-	if (!ensure(ProjectileBP)) { return; }
-
-	if (((GetWorld()->GetTimeSeconds() - LastFire) > Reload))
+	if (FiringState == EFireState::Loaded)
 	{
+		if (!ensure(Barrel)) { return; }
+		if (!ensure(ProjectileBP)) { return; }
+
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->Launch(TossSpeed);
 		LastFire = GetWorld()->GetTimeSeconds();

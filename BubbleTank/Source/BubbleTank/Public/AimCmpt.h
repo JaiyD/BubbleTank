@@ -10,6 +10,13 @@ class UBarrel;
 class UTurret;
 class AProjectile;
 
+UENUM()
+enum class EFireState : uint8
+{
+	Reloading,
+	Loaded
+};
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class BUBBLETANK_API UAimCmpt : public UActorComponent
 {
@@ -22,6 +29,9 @@ public:
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
+
+	UPROPERTY(BlueprintReadOnly, Category = Status)
+	EFireState FiringState = EFireState::Reloading;
 
 public:	
 	// Called every frame
