@@ -12,6 +12,7 @@ class BUBBLETANK_API ATheTank : public APawn
 	GENERATED_BODY()
 
 public:
+	//WAS USED TO SETUP THE MOVEMNT AND THE AIM BUT GOT REFACTORED OUT 
 	// Sets default values for this pawn's properties
 	ATheTank();
 

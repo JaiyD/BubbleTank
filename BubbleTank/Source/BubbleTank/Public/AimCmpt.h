@@ -31,7 +31,7 @@ protected:
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = Status)
-	EFireState FiringState = EFireState::Reloading;
+	EFireState FiringState = EFireState::Reloading;//default state of the tank
 
 public:	
 	// Called every frame
@@ -53,9 +53,11 @@ private:
 
 	FVector AimOrientation;
 
+	//reload speed of the tanks
 	float LastFire = 0;
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float Reload = 3;
+
 	UPROPERTY(EditAnywhere, Category = Firing)
 	float TossSpeed = 8000.0;
 	UPROPERTY(EditAnywhere, Category = Setup)

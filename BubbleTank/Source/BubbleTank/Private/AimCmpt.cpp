@@ -35,6 +35,7 @@ void UAimCmpt::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
+	//determine whether the tank is reloaded or loaded
 	if (bool isReloaded = ((GetWorld()->GetTimeSeconds() - LastFire) < Reload))
 	{
 		FiringState = EFireState::Reloading;
@@ -45,20 +46,23 @@ void UAimCmpt::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 	}
 }
 
+//Used to link the barrel and the turret in the tank blueprint event graph
 void UAimCmpt::init(UBarrel* SetBarrel, UTurret* SetTurret)
 {
 	Barrel = SetBarrel;
 	Turret = SetTurret;
 }
 
+//Set the aiming direction of the tanks
 void UAimCmpt::AimDirection(FVector OutHitPosition)
 {
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(Turret)) { return; }
 
 	FVector OutTossVelocity(0);
-	FVector Start = Barrel->GetSocketLocation(FName("Projectile"));
+	FVector Start = Barrel->GetSocketLocation(FName("Projectile"));//the location of where the projectile will be
 
+	//special method used to help for aiming
 	if (UGameplayStatics::SuggestProjectileVelocity(this, OutTossVelocity, Start, OutHitPosition, TossSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace))
 	{
 		AimOrientation = OutTossVelocity.GetSafeNormal();
@@ -66,6 +70,7 @@ void UAimCmpt::AimDirection(FVector OutHitPosition)
 	}
 }
 
+//Moving the barrel and the turret according to the aim
 void UAimCmpt::AimMovement(FVector AimOrientation)
 {
 	if (!ensure(Barrel && Turret)) { return; }
@@ -76,15 +81,16 @@ void UAimCmpt::AimMovement(FVector AimOrientation)
 	Turret->Rotate(Rotator.Yaw);
 }
 
+//Firing the projectile
 void UAimCmpt::Fire()
 {
 	if (FiringState == EFireState::Loaded)
 	{
 		if (!ensure(Barrel)) { return; }
 		if (!ensure(ProjectileBP)) { return; }
-
+		//spawning the projectile
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBP, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		Projectile->Launch(TossSpeed);
-		LastFire = GetWorld()->GetTimeSeconds();
+		LastFire = GetWorld()->GetTimeSeconds();//reloading
 	}
 }

@@ -17,6 +17,7 @@ class BUBBLETANK_API UMoveCmpt : public UNavMovementComponent
 	GENERATED_BODY()
 	
 public:
+	//responsible for the movement of the tank
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void Moving(float Speed);
 	UFUNCTION(BlueprintCallable, Category = Input)
@@ -24,7 +25,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Init(UTrack* LeftTrackSet, UTrack* RightTrackSet);
 
-	//pathfinding for ai
+	//pathfinding method for AI
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 
 private:

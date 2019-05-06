@@ -25,15 +25,19 @@ protected:
 	void FoundAimCmpt(UAimCmpt* AimCmptRef);
 
 private:
+	//responsible for the controls for the main player
+
 	void AimTo();
 	bool RayPosition(FVector& OutHitLocation) const;
 	bool GetDirection(FVector2D ReticlePosition, FVector& WorldDirection) const;
 	bool VectorPosition(FVector SightDirection, FVector& OutHitPosition) const;
 
+	//crosshair position
 	UPROPERTY(EditAnywhere)
 	float ReticleX = 0.5;
 	UPROPERTY(EditAnywhere)
 	float ReticleY = 0.3333;
+
 	UPROPERTY(EditAnywhere)
 	float Range = 1000000;
 };

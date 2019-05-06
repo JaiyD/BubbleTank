@@ -23,9 +23,10 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
+	//To launch the projectile
 	void Launch(float Speed);
 	
 private:
+	//setting up the movement of the projectile
 	UProjectileMovementComponent* ProjectileMovement = nullptr;
 };

@@ -3,6 +3,7 @@
 
 #include "TheTank.h"
 
+//was used to setup the movement and the aiming but got refactored out
 // Sets default values
 ATheTank::ATheTank()
 {

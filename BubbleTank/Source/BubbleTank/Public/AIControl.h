@@ -7,7 +7,7 @@
 #include "AIControl.generated.h"
 
 /**
- * 
+ * Responsible for the AI
  */
 UCLASS()
 class BUBBLETANK_API AAIControl : public AAIController

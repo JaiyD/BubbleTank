@@ -8,6 +8,7 @@
 void AMPController::BeginPlay()
 {
 	Super::BeginPlay();
+	//getting the aim component
 	auto AimC = GetPawn()->FindComponentByClass<UAimCmpt>();
 	if (!ensure(AimC)) { return; }
 
@@ -19,7 +20,7 @@ void AMPController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	AimTo();
 }
-
+//Used to help aim the tankk
 void AMPController::AimTo()
 {
 	if (!GetPawn()) { return; }
@@ -32,7 +33,7 @@ void AMPController::AimTo()
 		AimC->AimDirection(OutHitPosition);
 	}
 }
-
+//Getting the position to help the aiming
 bool AMPController::RayPosition(FVector& OutHitPosition) const
 {
 	int32 ScreenSizeX, ScreenSizeY;
@@ -46,13 +47,13 @@ bool AMPController::RayPosition(FVector& OutHitPosition) const
 	}
 	return true;
 }
-
+//The direction on the screen
 bool AMPController::GetDirection(FVector2D ReticlePosition, FVector& WorldDirection) const
 {
 	FVector WorldLocation;
 	return DeprojectScreenPositionToWorld(ReticlePosition.X, ReticlePosition.Y, WorldLocation, WorldDirection);
 }
-
+//Vector of the aim
 bool AMPController::VectorPosition(FVector SightDirection, FVector& OutHitPosition) const
 {
 	FHitResult Hit;
@@ -60,9 +61,9 @@ bool AMPController::VectorPosition(FVector SightDirection, FVector& OutHitPositi
 	auto End = Start + SightDirection * Range;
 	if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECollisionChannel::ECC_Visibility))
 	{
-		OutHitPosition = Hit.Location;
+		OutHitPosition = Hit.Location;//if the aim intercepts an obstacle
 		return true;
 	}
-	OutHitPosition = FVector(0.0);
+	OutHitPosition = FVector(0.0);//if the aim intercepts nothing, set to 0
 	return false;
 }

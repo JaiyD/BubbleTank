@@ -15,15 +15,17 @@ class BUBBLETANK_API UTrack : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
+	//set the default values for the track's properties
 	UTrack();
 
 	virtual void BeginPlay() override;
 
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
+	//setting the speed of the tracks
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void SetSpeed(float Throttle);
-
+	//force needed to drive the tank through the tracks
 	UPROPERTY(EditDefaultsOnly)
 	float DrivingForce = 80000000.0;//newtons
 

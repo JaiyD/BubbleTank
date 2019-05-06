@@ -18,10 +18,11 @@ public:
 	void Elevate(float ElevationSpeed);
 
 private:
+	//restrictions for the elevation
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxElevationDegrees = 10;// elevation degrees per second
+	float MaxElevationDegrees = 10;// elevation degrees per second
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MaxElevation = 40;
+	float MaxElevation = 40;
 	UPROPERTY(EditAnywhere, Category = Setup)
-		float MinElevation = 0;
+	float MinElevation = 0;
 };

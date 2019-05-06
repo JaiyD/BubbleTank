@@ -15,6 +15,7 @@ class BUBBLETANK_API UTurret : public UStaticMeshComponent
 	GENERATED_BODY()
 	
 public:
+	//responsible for rotating the turret
 	void Rotate(float RotationSpeed);
 
 private:
